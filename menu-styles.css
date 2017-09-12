@@ -1,20 +1,35 @@
-       h1, h2, h3, h4, h5, h6 {
-            color: crimson;
-        }
-        body {
-            margin: 0;
-            background-color: antiquewhite;
-
-        }
-        ul {
-            list-style: none;
-        }
-        figure, figcaption{
-            text-align: left;
-        }
-        figcaption {
-            margin-right: auto;
-        }
-header{
-    background: gold;
+h1, h2, h3, h4, h5, h6 {
+    color: crimson;
 }
+body {
+    margin: 0;
+    background-color: antiquewhite;
+
+}
+ul {
+    list-style: none;
+    display: block;
+
+}
+figure, figcaption{
+    text-align: center;
+}
+figcaption {
+    margin-right: auto;
+}
+.navm {
+    display: inline-table;
+}
+.navit{
+    padding-left: 40px;
+}
+.mainm {
+    padding: 0px 15px;
+}
+.mainmenum, h1, nav{
+    text-align: center
+}
+#ulnav{
+    padding: 0px
+}
+
