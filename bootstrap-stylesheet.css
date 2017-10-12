@@ -1,0 +1,28 @@
+        nav{
+            font-family: 'Righteous', cursive;
+        }
+        h1, h2, h3, h4, h5, h6 {
+        font-family: 'Architects Daughter';
+        }
+        .navbar-brand{
+            font-size: 30px;
+        }
+
+        #carouselExampleControls{
+        width: 80%;
+        margin: 40px auto;
+        }
+
+        .figure{
+            padding: 0px 10px;
+        }
+
+        form{
+            margin: 5%;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .jumbotron{
+           background-color:#ccff33;
+        }
