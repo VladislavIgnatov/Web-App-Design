@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+      </script>
+      <script type="text/javascript" src="higher-hw.js">
+      
+      </script>
+ 
+      
+    
+    <title>Benford</title>
+  </head>
+  <body class="container-fluid">
+    
+    <h1>Benford</h1>
+      
+      <h3>Choose dataset(loads when selected): </h3>
+      
+       <select id ="ddl" name="ddl" onmousedown="this.value='';" onchange="jsFunction(this.value);">
+          <option value="livejournal" >livejournal</option>
+          <option value="librarybooks">librarybooks</option>
+          <option value="sunspots">sunspots</option>
+        </select> 
+      
+       <div id="chart_div"></div>
+      
+    
+
+    
+  </body>
+</html>
