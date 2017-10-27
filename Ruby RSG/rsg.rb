@@ -57,6 +57,7 @@ def to_grammar_hash(split_def_array)
   end
   print(hashing)
   puts()
+  hashing
 end
 
 # Returns true iff s is a non-terminal
@@ -64,6 +65,11 @@ end
 #        and the last character is >
 def is_non_terminal?(s)
   # TODO: your implementation here
+  if(s.match(/<[a-z]*[0-9]*>/))
+    return true
+  else
+    return false
+  end
 end
 
 # Given a grammar hash (as returned by to_grammar_hash)
@@ -99,7 +105,7 @@ def rsg(filename)
   print(x)
   puts()
   puts()
-  x.each do |item|
+  x.each do |item| #creat an 2d array for the function to_grammar_hash()
     print( split_definition(item))
     grammer.push(split_definition(item))
     puts()
@@ -107,8 +113,9 @@ def rsg(filename)
   puts()
   print( grammer)
   puts()
-  to_grammar_hash(grammer)
+  hash = to_grammar_hash(grammer)  #check for the function to_grammar_hash()
   puts()
+  print(is_non_terminal?(hash["<start>"][0][3])) #check for the function is_non_terminal?()
 end
 
 if __FILE__ == $0
