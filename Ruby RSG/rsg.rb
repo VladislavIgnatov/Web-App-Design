@@ -65,7 +65,7 @@ end
 #        and the last character is >
 def is_non_terminal?(s)
   # TODO: your implementation here
-  if(s.match(/<[a-z]*[0-9]*>/))
+  if(s.match(/<([a-z]*[0-9]*)*>/))
     return true
   else
     return false
@@ -115,7 +115,9 @@ def rsg(filename)
   puts()
   hash = to_grammar_hash(grammer)  #check for the function to_grammar_hash()
   puts()
-  print(is_non_terminal?(hash["<start>"][0][3])) #check for the function is_non_terminal?()
+  print(is_non_terminal?(hash["<start>"][0][2])) #check for the function is_non_terminal?() "<verb>"
+  puts()
+  print(is_non_terminal?(hash["<start>"][0][3])) #check for the function is_non_terminal?() "tonight."
 end
 
 if __FILE__ == $0
