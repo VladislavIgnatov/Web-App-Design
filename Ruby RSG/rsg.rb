@@ -23,7 +23,7 @@ end
 #     returns ["<start>", "You <adj> <name> .", ""]
 def split_definition(raw_def)
   # TODO: your implementation here
-  raw_def = raw_def.split(/\n/)[1..raw_def.length]
+  raw_def = raw_def.split(/\n*\n/)[1..raw_def.length]
   raw_def = raw_def.map { |n| n.tr(";", "").strip() }
 end
 
@@ -42,7 +42,6 @@ def to_grammar_hash(split_def_array)
   hashing = {}
   items = []
   firstRound = true
-  puts()
   for i in 0..(split_def_array.length-1)
     split_def_array[i].each do |item|
       if(firstRound)
@@ -55,8 +54,6 @@ def to_grammar_hash(split_def_array)
     hashing[split_def_array[i][0]] = items
     items = []
   end
-  print(hashing)
-  puts()
   hashing
 end
 
@@ -65,7 +62,7 @@ end
 #        and the last character is >
 def is_non_terminal?(s)
   # TODO: your implementation here
-  if(s.match(/<([a-z]*[0-9]*)*>/))
+  if(s.match(/<('*[a-z]*_*-*[0-9]*_*-*[A-Z]*)*>/))
     return true
   else
     return false
@@ -91,7 +88,32 @@ end
 # case-insensitively, <NOUN> matches <Noun> and <noun>, for example.
 def expand(grammar, non_term="<start>")
   # TODO: your implementation here
-  
+  begin
+    i = rand(0..((grammar[non_term].length)-1))
+  rescue Exception => e
+    # puts e.message
+    #puts e.backtrace.inspect
+    i =
+        print(non_term)
+    puts(i)
+    puts(i)
+    puts(i)
+    return grammar
+  end
+
+  x = ''
+  grammar[non_term][i].each do |item|
+    if(!is_non_terminal?(item))
+      if(item == ".")
+        x = x + item
+      else
+        x = x + item + " "
+      end
+    else
+      x = x + String(expand(grammar, non_term=item))
+    end
+  end
+  x
 end
 
 
@@ -102,32 +124,28 @@ def rsg(filename)
   # TODO: your implementation here
   x = read_grammar_defs(filename)
   grammer = []
-  print(x)
-  puts()
-  puts()
+
   x.each do |item| #creat an 2d array for the function to_grammar_hash()
-    print( split_definition(item))
     grammer.push(split_definition(item))
-    puts()
   end
-  puts()
-  print( grammer)
-  puts()
+  #print(x)
   hash = to_grammar_hash(grammer)  #check for the function to_grammar_hash()
-  puts()
-  print(is_non_terminal?(hash["<start>"][0][2])) #check for the function is_non_terminal?() "<verb>"
-  puts()
-  print(is_non_terminal?(hash["<start>"][0][3])) #check for the function is_non_terminal?() "tonight."
+  hash["<start>"] = [hash["<start>"].flatten]
+  #print(hash)
+
+  y = expand(hash)
+  #print(y)
+
 end
 
 if __FILE__ == $0
   # TODO: your implementation of the following
   # prompt the user for the name of a grammar file
   # rsg that file
-  #print( "Enter your file name: ")
-  #STDOUT.flush
-  filename = "poem"#gets.chomp
-  puts "Your file name is " + filename
+  print( "Enter your file name: ")
+  STDOUT.flush
+  #filename = gets.chomp
+  #  puts "Your file name is " + filename
   puts()
-  rsg(filename)
+  rsg("CS-assignment-handout")
 end
