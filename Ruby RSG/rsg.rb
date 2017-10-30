@@ -23,8 +23,21 @@ end
 #     returns ["<start>", "You <adj> <name> .", ""]
 def split_definition(raw_def)
   # TODO: your implementation here
-  raw_def = raw_def.split(/\n*\n/)[1..raw_def.length]
-  raw_def = raw_def.map { |n| n.tr(";", "").strip() }
+  raw_def = raw_def.split(/;\n*/) #split each ;
+
+  if(raw_def[0].match("<start>")) #spliting strings cased on each .g file pattern
+    raw_def[0] = raw_def[0].split(/\n+\t*(<start>) *\n+\t*/)
+  else
+    raw_def[0] = raw_def[0].split(/\n+\t*(<.+?>) *\n*\t*/)
+  end
+
+  raw_def = raw_def.flatten #make it 1 dimensional array
+  raw_def[0] = ""
+  while raw_def[0] == "" do   #remove empty elements from the beginning of the array
+    raw_def.shift
+  end
+
+  return raw_def
 end
 
 
@@ -42,9 +55,10 @@ def to_grammar_hash(split_def_array)
   hashing = {}
   items = []
   firstRound = true
+  firstRound
   for i in 0..(split_def_array.length-1)
     split_def_array[i].each do |item|
-      if(firstRound)
+      if(firstRound) #skips the first elements in the inner arrays, elements with patten <('*\w*_*-*\d*_*-*\w*)*>
         firstRound = false
       else
         items.push(item.split())
@@ -62,10 +76,12 @@ end
 #        and the last character is >
 def is_non_terminal?(s)
   # TODO: your implementation here
-  if(s.match(/<('*[a-z]*_*-*[0-9]*_*-*[A-Z]*)*>/))
-    return true
-  else
-    return false
+  if(s.length > 1)
+    if(s.match(/<('*\w*_*-*\d*_*-*\w*)*>/)) #it looks for all the possible words between <>
+      return true
+    else
+      return false
+    end
   end
 end
 
@@ -88,29 +104,18 @@ end
 # case-insensitively, <NOUN> matches <Noun> and <noun>, for example.
 def expand(grammar, non_term="<start>")
   # TODO: your implementation here
-  begin
-    i = rand(0..((grammar[non_term].length)-1))
-  rescue Exception => e
-    # puts e.message
-    #puts e.backtrace.inspect
-    i =
-        print(non_term)
-    puts(i)
-    puts(i)
-    puts(i)
-    return grammar
-  end
-
+  i = rand(0..((grammar[non_term].length)-1)) #generate a random number used to generate the random sentence
   x = ''
-  grammar[non_term][i].each do |item|
-    if(!is_non_terminal?(item))
-      if(item == ".")
-        x = x + item
+
+  grammar[non_term][i].each do |item| #it starts with the <start> => array first and recursively generate the sentence
+    if(!is_non_terminal?(item)) #base case
+      if(item === "." or item === ",") #check for the end of the sentence or comma
+        x = x.rstrip + item +  " "
       else
-        x = x + item + " "
+        x = x  + item + " "
       end
     else
-      x = x + String(expand(grammar, non_term=item))
+      x = x + String(expand(grammar, non_term=item)) #recursion
     end
   end
   x
@@ -122,19 +127,16 @@ end
 # random expansion of the grammar
 def rsg(filename)
   # TODO: your implementation here
-  x = read_grammar_defs(filename)
+  x = read_grammar_defs(filename) #reads the grammer
   grammer = []
-
-  x.each do |item| #creat an 2d array for the function to_grammar_hash()
+  x.each do |item| #creats a 2d array for the function to_grammar_hash()
     grammer.push(split_definition(item))
   end
-  #print(x)
-  hash = to_grammar_hash(grammer)  #check for the function to_grammar_hash()
-  hash["<start>"] = [hash["<start>"].flatten]
-  #print(hash)
 
-  y = expand(hash)
-  #print(y)
+  hash = to_grammar_hash(grammer)  #Calling for the function to_grammar_hash()
+
+  randomSentence = expand(hash) #calling the expand function to return the random sentence
+  puts(randomSentence) #prints the random sentence.
 
 end
 
@@ -142,10 +144,22 @@ if __FILE__ == $0
   # TODO: your implementation of the following
   # prompt the user for the name of a grammar file
   # rsg that file
-  print( "Enter your file name: ")
-  STDOUT.flush
-  #filename = gets.chomp
-  #  puts "Your file name is " + filename
-  puts()
-  rsg("CS-assignment-handout")
+  filename = ""
+  while filename != "0"  do
+    puts()
+
+    print( "Enter your file name (0 to Exit): ")
+    STDOUT.flush
+    filename = gets.chomp
+
+    if(filename != "0")
+      begin
+        rsg(filename)
+      rescue Exception => e
+        puts("File does not exists! try again!")
+        puts e.message
+        puts e.backtrace.inspect
+      end
+    end
+  end
 end
