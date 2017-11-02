@@ -23,18 +23,32 @@ end
 #     returns ["<start>", "You <adj> <name> .", ""]
 def split_definition(raw_def)
   # TODO: your implementation here
-  raw_def = raw_def.split(/;\n*/) #split each ;
+  if(raw_def =~ /\n<.+?>\n\t;\n/)#special case
 
-  if(raw_def[0].match("<start>")) #spliting strings cased on each .g file pattern
-    raw_def[0] = raw_def[0].split(/\n+\t*(<start>) *\n+\t*/)
-  else
+    raw_def = raw_def.split(/;\n*/) #split each ;
     raw_def[0] = raw_def[0].split(/\n+\t*(<.+?>) *\n*\t*/)
-  end
+    raw_def = raw_def.flatten #make it 1 dimensional array
+    raw_def[0] = ""
 
-  raw_def = raw_def.flatten #make it 1 dimensional array
-  raw_def[0] = ""
-  while raw_def[0] == "" do   #remove empty elements from the beginning of the array
-    raw_def.shift
+    while raw_def[0] == "" do   #remove empty elements from the beginning of the array
+      raw_def.shift
+    end
+
+    raw_def.insert(-1, "")
+  else
+    raw_def = raw_def.split(/;\n*/) #split each ;
+
+    if(raw_def[0].match("<start>")) #spliting strings cased on each .g file pattern
+      raw_def[0] = raw_def[0].split(/\n+\t*(<start>) *\n+\t*/)
+    else
+      raw_def[0] = raw_def[0].split(/\n+\t*(<.+?>) *\n*\t*/)
+    end
+
+    raw_def = raw_def.flatten #make it 1 dimensional array
+    raw_def[0] = ""
+    while raw_def[0] == "" do   #remove empty elements from the beginning of the array
+      raw_def.shift
+    end
   end
 
   return raw_def
