@@ -124,7 +124,7 @@ def expand(grammar, non_term="<start>")
   grammar[non_term][i].each do |item| #it starts with the <start> => array first and recursively generate the sentence
     if(!is_non_terminal?(item)) #base case
       if(item === "." or item === ",") #check for the end of the sentence or comma
-        x = x.rstrip + item +  " "
+        x = x.rstrip + item + " "
       else
         x = x  + item + " "
       end
@@ -150,8 +150,9 @@ def rsg(filename)
   hash = to_grammar_hash(grammer)  #Calling for the function to_grammar_hash()
 
   randomSentence = expand(hash) #calling the expand function to return the random sentence
-  puts(randomSentence) #prints the random sentence.
-
+  puts()
+  print(randomSentence)
+  return randomSentence
 end
 
 if __FILE__ == $0
