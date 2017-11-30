@@ -5,4 +5,5 @@ gem 'slim'
 gem 'sqlite3'
 gem 'data_mapper'
 gem 'dm-sqlite-adapter'
-gem 'bcrypt'
+gem 'bcrypt', platforms: :ruby
+gem 'zip'

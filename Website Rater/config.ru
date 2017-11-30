@@ -1,2 +1,3 @@
-require './rsg_sinatra'
+require './m_sinatra'
 run Sinatra::Application
+

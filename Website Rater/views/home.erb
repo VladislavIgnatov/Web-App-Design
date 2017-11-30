@@ -1,1 +1,47 @@
 <h1>Home Page</h1>
+<div>
+    <% @files.each do |page|%>
+        <div>
+          <iframe class="figure col-lg-12 col-md-6" height="500" width="1000" src="<%= page %>"></iframe>
+        </div>
+      <% @setoff = 0%>
+      <% @userpn1.each do |name|%>
+        <% if name == page.split('/')[2] %>
+              <% @setoff = 1%>
+        <% end %>
+      <% end %>
+      <% if @usernumv != 0 && @setoff == 0  %>
+        <form action="/vote/<%= page %>" method="POST" enctype="multipart/form-data">
+          <select class="custom-select" name="<%= page.split('/')[2] %>">
+            <option selected>Rank this site!</option>
+            <%if @userp1 == 0%>
+              <option value="5">Firs place</option>
+            <% end %>
+            <%if @userp2 == 0 %>
+              <option value="3">Second place</option>
+            <% end %>
+            <%if @userp3 == 0%>
+              <option value="1">Third place</option>
+            <% end %>
+          </select>
+          <button type="submit" class="btn btn-primary">Vote!</button>
+        </form>
+      <% else %>
+          <form action="/vote/<%= page %>" method="POST" enctype="multipart/form-data">
+            <select class="custom-select" name="<%= page.split('/')[2] %>" disabled>
+              <option selected>Thank you for your vote!</option>
+              <option value="5">Firs place</option>
+              <option value="3">Second place</option>
+              <option value="1">Third place</option>
+            </select>
+            <button type="submit" class="btn btn-primary" disabled>Voted!</button>
+          </form>
+      <% end %>
+        <br><br><br>
+
+    <% end %>
+</div>
+
+<% if @files.size == 0 %>
+    <p>No data has been uploaded yet!</p>
+<% end %>
