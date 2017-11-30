@@ -1,0 +1,43 @@
+<!-- The following code was generated from this website https://getbootstrap.com/docs/4.0/components/navbar/ then it was modified to suit needs, accessed on Sept 28, 2017-->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <!-- head name -->
+  <a class="navbar-brand" href="/"><span>Ratings</span></a>
+
+  <!-- button part of the following code was generated from this website https://www.codeply.com/go/4FdZGlPMNV  accessed on Sept 30, 2017 -->
+  <button class="navbar-toggler navbar-toggler-right custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+
+  <!-- Links -->
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <% if(session[:admin]) %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Home"><span>Home</span></a>
+        </li>
+      <% end %>
+      <% if(session[:admin] and session[:permissions]) %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Members"><span>Members</span></a>
+        </li>
+      <% end %>
+      <% if(session[:admin] and session[:permissions]) %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Analytics"><span>Analytics</span></a>
+        </li>
+      <% end %>
+      <% if(session[:admin] and session[:permissions]) %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Uploads"><span>Uploads</span></a>
+        </li>
+      <% end %>
+      <% if(session[:admin]) %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Signout"><span>Sign out</span></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

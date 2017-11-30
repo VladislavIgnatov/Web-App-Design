@@ -1,0 +1,15 @@
+<h1>Analytics on the vote</h1>
+<% if session[:vote] %>
+ <div class="figure col-lg-12 col-md-6">
+   <form action="/downloadCsv" method="POST" enctype="multipart/form-data">
+     <button type="submit" class="btn btn-primary">Download Report</button>
+   </form>
+   <br>
+   <br>
+        <!--Div that will hold the pie chart-->
+    <div id="chart_div" class="mr-auto p-6"></div>
+    <div id="chart_div2" class="p-6"></div>
+ </div>
+<% else %>
+    <p>There are no data available!</p>
+<% end %>

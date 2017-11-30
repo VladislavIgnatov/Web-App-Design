@@ -1,0 +1,9 @@
+<h1>List of members</h1>
+
+<% @names.each do |name| %>
+    <p><%= name %></p>
+<% end %>
+
+<% if @names.size == 0 %>
+    <p>There are no data available!</p>
+<% end %>
